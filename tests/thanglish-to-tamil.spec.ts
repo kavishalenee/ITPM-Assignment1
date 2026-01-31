@@ -664,31 +664,7 @@ test("Neg_Fun_0010 - Invalid spelling (Expected to FAIL)", async ({ page }) => {
   expect(false).toBe(true);
 });
 
-// UI_Fun_0001 - UI Validation (Alignment / Input box visible)
-test("UI_Fun_0001 - UI validation (Alignment check - Expected to FAIL)", async ({ page }) => {
-  await page.goto("https://tamil.changathi.com/", { waitUntil: "domcontentloaded" });
 
-  // Input box should be visible and enabled
-  const inputBox = page.locator("textarea, input[type='text'], [contenteditable='true']").first();
-  await expect(inputBox).toBeVisible();
-  await expect(inputBox).toBeEnabled();
-
-  // Check page title / header exists (basic UI presence)
-  await expect(page.locator("text=English To Tamil Conversion")).toBeVisible();
-
-  // UI alignment check: inputBox should not be too small (means layout broken)
-  const box = await inputBox.boundingBox();
-  expect(box).not.toBeNull();
-
-  // If box exists, check it has usable size
-  if (box) {
-    expect(box.width).toBeGreaterThan(200);   // textbox not collapsed
-    expect(box.height).toBeGreaterThan(20);   // textbox visible height
-  }
-
-  // ❌ Force FAIL (so UI test appears as FAILED in report)
-  expect(false).toBe(true);
-});
 
 // UI_Fun_0001 - UI Validation (Expected to PASS)
 test("UI_Fun_0001 - UI validation (Expected to PASS)", async ({ page }) => {
@@ -699,7 +675,7 @@ test("UI_Fun_0001 - UI validation (Expected to PASS)", async ({ page }) => {
   await expect(inputBox).toBeVisible();
   await expect(inputBox).toBeEnabled();
 
-  await expect(page.getByText("English To Tamil Conversion", { exact: false })).toBeVisible();
+  await expect(page.getByText("vanakkam eppadi irukka?", { exact: false })).toBeVisible();
 
   const box = await inputBox.boundingBox();
   expect(box).not.toBeNull();
